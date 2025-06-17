@@ -2,16 +2,42 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import GameSelector from "./GameSelector";
+import { useGameState } from "@/hooks/useGameState";
+import CitySelector from "./CitySelector";
+import GameSession from "./GameSession";
 import StatsPage from "./StatsPage";
+import { City } from "@/data/cities";
 
 const StartPage = () => {
   const [currentView, setCurrentView] = useState("start");
+  const { selectCity, setGameMode, startGame } = useGameState();
+
+  const handleCitySelect = (city: City) => {
+    if (city.id === 'never-have-i-ever') {
+      setGameMode('never-have-i-ever');
+    } else {
+      selectCity(city);
+      setGameMode('city');
+    }
+    startGame();
+    setCurrentView("game");
+  };
 
   const renderCurrentView = () => {
     switch (currentView) {
-      case "games":
-        return <GameSelector onBack={() => setCurrentView("start")} />;
+      case "city-selector":
+        return (
+          <CitySelector
+            onCitySelect={handleCitySelect}
+            onBack={() => setCurrentView("start")}
+          />
+        );
+      case "game":
+        return (
+          <GameSession
+            onBack={() => setCurrentView("start")}
+          />
+        );
       case "stats":
         return <StatsPage onBack={() => setCurrentView("start")} />;
       default:
@@ -69,7 +95,7 @@ const StartPage = () => {
               className="space-y-4 w-full max-w-xs"
             >
               <Button
-                onClick={() => setCurrentView("games")}
+                onClick={() => setCurrentView("city-selector")}
                 className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 border-0 rounded-2xl shadow-lg transform transition-all hover:scale-105 active:scale-95"
               >
                 🎮 Starta spel

@@ -1,26 +1,38 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-
-const stats = [
-  { label: "Rundor spelade", value: "42", icon: "🎮" },
-  { label: "Mest spelade spel", value: "Never Have I Ever", icon: "🏆" },
-  { label: "Upplåsta kategorier", value: "6/12", icon: "🔓" },
-  { label: "Total speltid", value: "3h 24min", icon: "⏱️" }
-];
-
-const achievements = [
-  { name: "Första steget", desc: "Spela ditt första spel", unlocked: true },
-  { name: "Party animal", desc: "Spela 50 rundor", unlocked: false },
-  { name: "Utforskare", desc: "Prova alla speltyper", unlocked: true },
-  { name: "Mästare", desc: "Lås upp alla kategorier", unlocked: false }
-];
+import { useGameState } from "@/hooks/useGameState";
 
 interface StatsPageProps {
   onBack: () => void;
 }
 
 const StatsPage = ({ onBack }: StatsPageProps) => {
+  const { gameState } = useGameState();
+
+  const stats = [
+    { 
+      label: "Rundor spelade", 
+      value: gameState.totalRounds.toString(), 
+      icon: "🎮" 
+    },
+    { 
+      label: "Städer utforskade", 
+      value: `${gameState.citiesPlayed.length}/2`, 
+      icon: "🗺️" 
+    },
+    { 
+      label: "Jag har aldrig rundor", 
+      value: gameState.neverHaveIEverRounds.toString(), 
+      icon: "🤫" 
+    },
+    { 
+      label: "Upplåsta prestationer", 
+      value: `${gameState.achievements.filter(a => a.unlocked).length}/${gameState.achievements.length}`, 
+      icon: "🏆" 
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white p-6">
       {/* Header */}
@@ -69,9 +81,9 @@ const StatsPage = ({ onBack }: StatsPageProps) => {
       >
         <h2 className="text-xl font-bold mb-4">🏅 Prestationer</h2>
         <div className="space-y-3">
-          {achievements.map((achievement, index) => (
+          {gameState.achievements.map((achievement, index) => (
             <motion.div
-              key={achievement.name}
+              key={achievement.id}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 + index * 0.1 }}
@@ -82,9 +94,27 @@ const StatsPage = ({ onBack }: StatsPageProps) => {
               }`}
             >
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-bold">{achievement.name}</h3>
-                  <p className="text-sm text-gray-400">{achievement.desc}</p>
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">{achievement.emoji}</span>
+                  <div>
+                    <h3 className="font-bold">{achievement.name}</h3>
+                    <p className="text-sm text-gray-400">{achievement.description}</p>
+                    {!achievement.unlocked && (
+                      <div className="mt-2">
+                        <div className="text-xs text-gray-500 mb-1">
+                          {achievement.currentProgress}/{achievement.requirement}
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div
+                            className="bg-gradient-to-r from-pink-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                            style={{
+                              width: `${Math.min(100, (achievement.currentProgress / achievement.requirement) * 100)}%`
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="text-2xl">
                   {achievement.unlocked ? "✅" : "🔒"}
