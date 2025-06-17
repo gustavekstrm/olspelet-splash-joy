@@ -3,6 +3,7 @@ export interface Question {
   id: string;
   text: string;
   emoji: string;
+  type?: 'drink' | 'category';
 }
 
 export interface City {
@@ -18,7 +19,7 @@ export const cities: City[] = [
     id: "orebro",
     name: "Örebro",
     emoji: "🏰",
-    description: "Lokala referenser från Sveriges hjärta",
+    description: "Är du från Örebro? Spela då detta!",
     questions: [
       { id: "o1", text: "Drick om du någonsin varit på Stora Torget en fredag kväll!", emoji: "🍺" },
       { id: "o2", text: "Alla som bott på Vivalla dricker dubbelt!", emoji: "🏠" },
@@ -34,7 +35,7 @@ export const cities: City[] = [
     id: "uppsala",
     name: "Uppsala",
     emoji: "🎓",
-    description: "Studentstadens klassiker",
+    description: "Alright, inspark? Bara kul förfest? Lira detta!",
     questions: [
       { id: "u1", text: "Drick om du någonsin sprungit Fyrisån runt!", emoji: "🏃" },
       { id: "u2", text: "Alla som varit på Carolinabacken dricker!", emoji: "⛰️" },
@@ -59,4 +60,14 @@ export const neverHaveIEverQuestions: Question[] = [
   { id: "n8", text: "Jag har aldrig... somnat under en film på bio", emoji: "🎬" },
   { id: "n9", text: "Jag har aldrig... dansat på ett bord", emoji: "💃" },
   { id: "n10", text: "Jag har aldrig... ringt fel nummer med flit", emoji: "☎️" }
+];
+
+export const randomQuestions: Question[] = [
+  { id: "r1", text: "Drick om du har gått hem med en 5 år äldre tjej", emoji: "🍺", type: "drink" },
+  { id: "r2", text: "Nämn en kändis född på 70-talet, kör varvet runt", emoji: "⭐", type: "category" },
+  { id: "r3", text: "Drick om du någonsin har somnat på toaletten", emoji: "🚽", type: "drink" },
+  { id: "r4", text: "Säg en bilmärke, kör varvet runt", emoji: "🚗", type: "category" },
+  { id: "r5", text: "Drick om du har ljugit för dina föräldrar idag", emoji: "🤥", type: "drink" },
+  { id: "r6", text: "Nämn ett land i Afrika, kör varvet runt", emoji: "🌍", type: "category" },
+  { id: "r7", text: "Drick om du har varit otrogen", emoji: "💔", type: "drink" }
 ];

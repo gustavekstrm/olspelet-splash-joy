@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useGameState } from "@/hooks/useGameState";
 import CitySelector from "./CitySelector";
 import GameSession from "./GameSession";
+import RandomGameSession from "./RandomGameSession";
 import StatsPage from "./StatsPage";
 import { City } from "@/data/cities";
 
@@ -23,18 +24,29 @@ const StartPage = () => {
     setCurrentView("game");
   };
 
+  const handleRandomGameSelect = () => {
+    setCurrentView("random-game");
+  };
+
   const renderCurrentView = () => {
     switch (currentView) {
       case "city-selector":
         return (
           <CitySelector
             onCitySelect={handleCitySelect}
+            onRandomGameSelect={handleRandomGameSelect}
             onBack={() => setCurrentView("start")}
           />
         );
       case "game":
         return (
           <GameSession
+            onBack={() => setCurrentView("start")}
+          />
+        );
+      case "random-game":
+        return (
+          <RandomGameSession
             onBack={() => setCurrentView("start")}
           />
         );
@@ -79,7 +91,7 @@ const StartPage = () => {
               className="mb-8 text-center"
             >
               <h1 className="text-6xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                🍺
+                <span style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji' }}>🍺</span>
               </h1>
               <h2 className="text-4xl font-bold mt-2 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
                 Ölspelet
@@ -98,7 +110,7 @@ const StartPage = () => {
                 onClick={() => setCurrentView("city-selector")}
                 className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 border-0 rounded-2xl shadow-lg transform transition-all hover:scale-105 active:scale-95"
               >
-                🎮 Starta spel
+                <span style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji' }}>🎮</span> Starta spel
               </Button>
               
               <Button
@@ -106,14 +118,14 @@ const StartPage = () => {
                 variant="outline"
                 className="w-full py-6 text-lg font-semibold border-2 border-purple-500 text-purple-300 hover:bg-purple-500/20 rounded-2xl transform transition-all hover:scale-105 active:scale-95"
               >
-                📊 Statistik
+                <span style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji' }}>📊</span> Statistik
               </Button>
               
               <Button
                 variant="outline"
                 className="w-full py-6 text-lg font-semibold border-2 border-blue-500 text-blue-300 hover:bg-blue-500/20 rounded-2xl transform transition-all hover:scale-105 active:scale-95"
               >
-                ℹ️ Om spelet
+                <span style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji' }}>ℹ️</span> Om spelet
               </Button>
             </motion.div>
           </motion.div>

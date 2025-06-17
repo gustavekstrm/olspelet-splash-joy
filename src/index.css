@@ -65,7 +65,7 @@
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-foreground: 222.2 47.4%ยน 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -100,6 +100,10 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Better emoji rendering on iOS */
+    font-variant-emoji: emoji;
+    -webkit-font-feature-settings: "liga" on;
+    font-feature-settings: "liga" on;
   }
 }
 
@@ -116,4 +120,13 @@
 /* Smooth animations */
 * {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Enhanced emoji rendering for better iPhone compatibility */
+.emoji {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+  font-variant-emoji: emoji;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

@@ -5,10 +5,11 @@ import { cities, City } from "@/data/cities";
 
 interface CitySelectorProps {
   onCitySelect: (city: City) => void;
+  onRandomGameSelect: () => void;
   onBack: () => void;
 }
 
-const CitySelector = ({ onCitySelect, onBack }: CitySelectorProps) => {
+const CitySelector = ({ onCitySelect, onRandomGameSelect, onBack }: CitySelectorProps) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white p-6">
       {/* Header */}
@@ -24,12 +25,13 @@ const CitySelector = ({ onCitySelect, onBack }: CitySelectorProps) => {
         >
           ← Tillbaka
         </Button>
-        <h1 className="text-2xl font-bold">Välj stad</h1>
+        <h1 className="text-2xl font-bold">Välj spelläge</h1>
         <div className="w-10"></div>
       </motion.div>
 
       {/* City cards */}
-      <div className="space-y-4">
+      <div className="space-y-4 mb-8">
+        <h2 className="text-xl font-bold mb-4">Stadsspel</h2>
         {cities.map((city, index) => (
           <motion.div
             key={city.id}
@@ -42,7 +44,9 @@ const CitySelector = ({ onCitySelect, onBack }: CitySelectorProps) => {
           >
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 rounded-3xl shadow-xl transform transition-all hover:scale-105">
               <div className="flex items-center space-x-4">
-                <span className="text-4xl">{city.emoji}</span>
+                <span className="text-4xl" style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji' }}>
+                  {city.emoji}
+                </span>
                 <div>
                   <h3 className="text-2xl font-bold text-white">{city.name}</h3>
                   <p className="text-white/80">{city.description}</p>
@@ -61,16 +65,41 @@ const CitySelector = ({ onCitySelect, onBack }: CitySelectorProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="mt-8"
+        className="space-y-4"
       >
-        <h2 className="text-xl font-bold mb-4">Eller välj spelläge</h2>
+        <h2 className="text-xl font-bold mb-4">Andra spellägen</h2>
+        
+        {/* Random Questions */}
+        <div
+          onClick={onRandomGameSelect}
+          className="cursor-pointer"
+        >
+          <div className="bg-gradient-to-r from-orange-600 to-red-600 p-6 rounded-3xl shadow-xl transform transition-all hover:scale-105">
+            <div className="flex items-center space-x-4">
+              <span className="text-4xl" style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji' }}>
+                🎲
+              </span>
+              <div>
+                <h3 className="text-2xl font-bold text-white">Slumpade frågor</h3>
+                <p className="text-white/80">Mix av "Drick om..." och kategorifrågor</p>
+                <p className="text-white/60 text-sm mt-1">
+                  Timer-baserade kategorier och dryck-utmaningar
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Never Have I Ever */}
         <div
           onClick={() => onCitySelect({ id: 'never-have-i-ever', name: 'Jag har aldrig', emoji: '🤫', description: 'Klassiska "Never Have I Ever" frågor', questions: [] })}
           className="cursor-pointer"
         >
           <div className="bg-gradient-to-r from-green-600 to-teal-600 p-6 rounded-3xl shadow-xl transform transition-all hover:scale-105">
             <div className="flex items-center space-x-4">
-              <span className="text-4xl">🤫</span>
+              <span className="text-4xl" style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji' }}>
+                🤫
+              </span>
               <div>
                 <h3 className="text-2xl font-bold text-white">Jag har aldrig</h3>
                 <p className="text-white/80">Klassiska "Never Have I Ever" frågor</p>
